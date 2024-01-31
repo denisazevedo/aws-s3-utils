@@ -1,0 +1,28 @@
+# Create a dockerfile for this python application
+
+# Use the official image as a parent image
+FROM python:3.10-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the file from your host to your current location
+COPY requirements.txt .
+
+# Run the command inside your image filesystem
+RUN pip install -r requirements.txt
+
+# Inform Docker that the container is listening on the specified port at runtime
+EXPOSE 5000
+
+# Copy the rest of your app's source code from your host to your image filesystem
+COPY . .
+
+# Run the specified command within the container
+CMD [ "python", "./s3-presign-upload.py" ]
+
+# Build the image
+# docker build -t python-s3 .
+
+# Run the container
+# docker run -p 5000:5000 python-s3
